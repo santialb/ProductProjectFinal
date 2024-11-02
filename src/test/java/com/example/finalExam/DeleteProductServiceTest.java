@@ -1,5 +1,6 @@
 package com.example.finalExam;
 
+import com.example.finalExam.exceptions.ProductNotFoundException;
 import com.example.finalExam.models.Product;
 import com.example.finalExam.repositories.ProductRepository;
 import com.example.finalExam.services.DeleteProductService;
@@ -31,7 +32,7 @@ public class DeleteProductServiceTest {
     @Test
     void given_product_not_found_when_delete_product_service_then_throw_runtime_exception(){
         Mockito.when(productRepository.findById("1")).thenReturn(Optional.empty());
-        Assertions.assertThrows(RuntimeException.class, () -> deleteProductService.execute("1"));
+        Assertions.assertThrows(ProductNotFoundException.class, () -> deleteProductService.execute("1"));
     }
 
     @Test

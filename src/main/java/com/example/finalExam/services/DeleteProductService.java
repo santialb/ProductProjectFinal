@@ -1,5 +1,6 @@
 package com.example.finalExam.services;
 
+import com.example.finalExam.exceptions.ProductNotFoundException;
 import com.example.finalExam.models.Product;
 import com.example.finalExam.repositories.Command;
 import com.example.finalExam.repositories.ProductRepository;
@@ -25,6 +26,6 @@ public class DeleteProductService implements Command<String, Void> {
             productRepository.deleteById(id);
             return ResponseEntity.noContent().build();
         }
-        throw new RuntimeException("Product not found");
+        throw new ProductNotFoundException();
     }
 }

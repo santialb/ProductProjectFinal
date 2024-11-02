@@ -1,4 +1,5 @@
 package com.example.finalExam.services;
+import com.example.finalExam.exceptions.ProductNotFoundException;
 import com.example.finalExam.models.Product;
 import com.example.finalExam.repositories.ProductRepository;
 import com.example.finalExam.repositories.Query;
@@ -21,6 +22,6 @@ public class GetProductService implements Query<String, Product> {
         if (productOptional.isPresent()){
             return ResponseEntity.ok(productOptional.get());
         }
-        throw new RuntimeException("Product not found");
+        throw new ProductNotFoundException();
     }
 }

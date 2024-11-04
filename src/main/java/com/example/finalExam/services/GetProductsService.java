@@ -6,7 +6,8 @@ import com.example.finalExam.models.Product;
 import com.example.finalExam.models.ProductDTO;
 import com.example.finalExam.repositories.ProductRepository;
 import com.example.finalExam.repositories.Query;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,17 +27,13 @@ public class GetProductsService implements Query<GetProductsQuery, List<ProductD
     @Override
     public ResponseEntity<List<ProductDTO>> execute(GetProductsQuery query) {
 
-        System.out.println("nameOrDescription: " + query.getNameOrDescription());
-        System.out.println("category: " + query.getCategory());
-        System.out.println("region: " + query.getRegion());
-        System.out.println("sort: " + defineSort(query.getProductSortBy()));
-
         Sort productSort = defineSort(query.getProductSortBy());
+        Pageable pageable = PageRequest.of(0, 10, productSort);
         List<Product> productList = productRepository
                 .findByNameOrDescriptionAndRegionAndCategory(query.getCategory(),
                         query.getRegion(),
                         query.getNameOrDescription(),
-                        productSort);
+                        pageable);
 
         return ResponseEntity.ok(productList.stream().map(ProductDTO::new).toList());
 

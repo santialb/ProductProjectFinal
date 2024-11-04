@@ -2,6 +2,7 @@ package com.example.finalExam.repositories;
 
 import com.example.finalExam.models.Product;
 import com.example.finalExam.models.Region;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,19 +14,12 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, String> {
     List<Product> findByNameContaining(String name);
 
-//    @Query("SELECT p FROM Product p WHERE " +
-//            "(:nameOrDescription is null or p.name like %:nameOrDescription% or p.description like %:nameOrDescription%) and " +
-//            "(p.region = :region) and " +
-//            "(:category is null or p.category.value = :category)")
-//    List<Product> findByNameOrDescriptionAndRegionAndCategory(String nameOrDescription, Region region,
-//                                                              String category, Sort sort);
-
     @Query("SELECT p FROM Product p WHERE " +
             "( :nameOrDescription IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :nameOrDescription, '%')) " +
             "OR LOWER(p.description) LIKE LOWER(CONCAT('%', :nameOrDescription, '%'))) AND " +
             "p.region = :region AND " +
             "( :category IS NULL OR LOWER(p.category.value) = LOWER(:category) )")
     List<Product> findByNameOrDescriptionAndRegionAndCategory(
-            String nameOrDescription, Region region, String category, Sort sort);
+            String nameOrDescription, Region region, String category, Pageable pageable);
 
 }

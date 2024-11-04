@@ -25,11 +25,17 @@ public class GetProductsService implements Query<GetProductsQuery, List<ProductD
 
     @Override
     public ResponseEntity<List<ProductDTO>> execute(GetProductsQuery query) {
+
+        System.out.println("nameOrDescription: " + query.getNameOrDescription());
+        System.out.println("category: " + query.getCategory());
+        System.out.println("region: " + query.getRegion());
+        System.out.println("sort: " + defineSort(query.getProductSortBy()));
+
         Sort productSort = defineSort(query.getProductSortBy());
         List<Product> productList = productRepository
-                .findByNameOrDescriptionAndRegionAndCategory(query.getNameOrDescription(),
+                .findByNameOrDescriptionAndRegionAndCategory(query.getCategory(),
                         query.getRegion(),
-                        query.getCategory(),
+                        query.getNameOrDescription(),
                         productSort);
 
         return ResponseEntity.ok(productList.stream().map(ProductDTO::new).toList());

@@ -1,7 +1,10 @@
 package com.example.finalExam.contollers;
 
+import com.example.finalExam.miscellaneous.GetProductsQuery;
+import com.example.finalExam.miscellaneous.ProductSortBy;
 import com.example.finalExam.models.Product;
 import com.example.finalExam.models.ProductDTO;
+import com.example.finalExam.models.Region;
 import com.example.finalExam.services.DeleteProductService;
 import com.example.finalExam.services.GetProductService;
 import com.example.finalExam.services.GetProductsService;
@@ -32,8 +35,14 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(){
-        return getProductsService.execute(null);
+    public ResponseEntity<List<ProductDTO>> getProducts(
+            @RequestHeader(value = "region", defaultValue = "US") String region,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String nameOrDescription,
+            @RequestParam(required = false) String orderBy
+    ){
+        return getProductsService.execute(new GetProductsQuery(Region.valueOf(region), category, nameOrDescription,
+                ProductSortBy.fromValue(orderBy)));
     }
 
     @GetMapping("product/search")

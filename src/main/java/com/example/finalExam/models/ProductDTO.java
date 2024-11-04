@@ -11,7 +11,7 @@ private String name;
 private String description;
 private Double price;
 private String manufacturer;
-private Category category;
+private String category;
 
 public ProductDTO(Product product){
     this.id = product.getId();
@@ -19,6 +19,6 @@ public ProductDTO(Product product){
     this.description = product.getDescription();
     this.price = product.getPrice();
     this.manufacturer = product.getManufacturer();
-    this.category = product.getCategory();
+    this.category = product.getCategory().getValue();
 }
 }

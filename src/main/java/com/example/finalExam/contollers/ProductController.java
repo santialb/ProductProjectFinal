@@ -2,8 +2,11 @@ package com.example.finalExam.contollers;
 
 import com.example.finalExam.miscellaneous.GetProductsQuery;
 import com.example.finalExam.miscellaneous.ProductSortBy;
+import com.example.finalExam.models.Product;
 import com.example.finalExam.models.ProductDTO;
+import com.example.finalExam.models.ProductRequest;
 import com.example.finalExam.models.Region;
+import com.example.finalExam.services.CreateProductService;
 import com.example.finalExam.services.DeleteProductService;
 import com.example.finalExam.services.GetProductService;
 import com.example.finalExam.services.GetProductsService;
@@ -18,11 +21,13 @@ public class ProductController {
     private final GetProductService getProductService;
     private final DeleteProductService deleteProductService;
     private final GetProductsService getProductsService;
+    private final CreateProductService createProductService;
 
-    public ProductController(GetProductService getProductService, DeleteProductService deleteProductService, GetProductsService getProductsService) {
+    public ProductController(GetProductService getProductService, DeleteProductService deleteProductService, GetProductsService getProductsService, CreateProductService createProductService) {
         this.getProductService = getProductService;
         this.deleteProductService = deleteProductService;
         this.getProductsService = getProductsService;
+        this.createProductService = createProductService;
     }
 
 
@@ -46,5 +51,10 @@ public class ProductController {
     @DeleteMapping("/product/{id}")
     public ResponseEntity<Void> deleteProductById(@PathVariable String id){
         return deleteProductService.execute(id);
+    }
+
+    @PostMapping("/product")
+    public  ResponseEntity<ProductDTO> createProduct(@RequestBody ProductRequest request){
+        return createProductService.execute(request);
     }
 }

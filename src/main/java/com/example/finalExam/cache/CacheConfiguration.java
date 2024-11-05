@@ -17,7 +17,7 @@ import java.util.EnumSet;
 @EnableScheduling
 public class CacheConfiguration {
 
-    private static final long CACHE_EVICT_DELAY_MS = 300_000;  // 10 minutes
+    private static final long CACHE_EVICT_DELAY_MS = 300_000;  // 5 minutes
 
     @Bean
     public CacheManager cacheManager(){

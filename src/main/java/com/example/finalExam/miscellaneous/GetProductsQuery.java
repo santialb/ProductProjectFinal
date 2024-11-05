@@ -2,8 +2,10 @@ package com.example.finalExam.miscellaneous;
 
 import com.example.finalExam.models.Region;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class GetProductsQuery {
     private Region region;
     private String nameOrDescription;

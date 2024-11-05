@@ -6,6 +6,8 @@ import com.example.finalExam.models.Product;
 import com.example.finalExam.models.ProductDTO;
 import com.example.finalExam.repositories.ProductRepository;
 import com.example.finalExam.repositories.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,6 +21,8 @@ public class GetProductsService implements Query<GetProductsQuery, List<ProductD
 
     private final ProductRepository productRepository;
 
+    private final Logger logger = LoggerFactory.getLogger(GetProductsService.class);
+
     public GetProductsService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
@@ -26,7 +30,7 @@ public class GetProductsService implements Query<GetProductsQuery, List<ProductD
 
     @Override
     public ResponseEntity<List<ProductDTO>> execute(GetProductsQuery query) {
-
+        logger.info("Get Products Service, query: {}", query);
         Sort productSort = defineSort(query.getProductSortBy());
         Pageable pageable = PageRequest.of(0, 10, productSort);
         List<Product> productList = productRepository

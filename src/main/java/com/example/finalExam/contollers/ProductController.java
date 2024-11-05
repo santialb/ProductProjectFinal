@@ -7,6 +7,7 @@ import com.example.finalExam.models.Region;
 import com.example.finalExam.services.DeleteProductService;
 import com.example.finalExam.services.GetProductService;
 import com.example.finalExam.services.GetProductsService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

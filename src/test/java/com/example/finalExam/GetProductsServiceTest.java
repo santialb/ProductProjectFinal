@@ -58,6 +58,7 @@ public class GetProductsServiceTest {
         assertEquals(2, actualList.size());
     }
 
+
     private List<Product> getProducts() {
         Product product1 = new Product();
         product1.setId("1");

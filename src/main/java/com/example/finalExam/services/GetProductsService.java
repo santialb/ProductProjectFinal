@@ -8,6 +8,7 @@ import com.example.finalExam.repositories.ProductRepository;
 import com.example.finalExam.repositories.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -29,6 +30,7 @@ public class GetProductsService implements Query<GetProductsQuery, List<ProductD
 
 
     @Override
+    @Cacheable("products")
     public ResponseEntity<List<ProductDTO>> execute(GetProductsQuery query) {
         logger.info("Get Products Service, query: {}", query);
         Sort productSort = defineSort(query.getProductSortBy());

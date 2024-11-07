@@ -2,14 +2,8 @@ package com.example.finalExam.contollers;
 
 import com.example.finalExam.miscellaneous.GetProductsQuery;
 import com.example.finalExam.miscellaneous.ProductSortBy;
-import com.example.finalExam.models.Product;
-import com.example.finalExam.models.ProductDTO;
-import com.example.finalExam.models.ProductRequest;
-import com.example.finalExam.models.Region;
-import com.example.finalExam.services.CreateProductService;
-import com.example.finalExam.services.DeleteProductService;
-import com.example.finalExam.services.GetProductService;
-import com.example.finalExam.services.GetProductsService;
+import com.example.finalExam.models.*;
+import com.example.finalExam.services.*;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,12 +16,14 @@ public class ProductController {
     private final DeleteProductService deleteProductService;
     private final GetProductsService getProductsService;
     private final CreateProductService createProductService;
+    private final UpdateProductService updateProductService;
 
-    public ProductController(GetProductService getProductService, DeleteProductService deleteProductService, GetProductsService getProductsService, CreateProductService createProductService) {
+    public ProductController(GetProductService getProductService, DeleteProductService deleteProductService, GetProductsService getProductsService, CreateProductService createProductService, UpdateProductService updateProductService) {
         this.getProductService = getProductService;
         this.deleteProductService = deleteProductService;
         this.getProductsService = getProductsService;
         this.createProductService = createProductService;
+        this.updateProductService = updateProductService;
     }
 
 
@@ -54,7 +50,12 @@ public class ProductController {
     }
 
     @PostMapping("/product")
-    public  ResponseEntity<ProductDTO> createProduct(@RequestBody ProductRequest request){
+    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductRequest request){
         return createProductService.execute(request);
+    }
+
+    @PutMapping("/product/{id}")
+    public ResponseEntity<ProductDTO> updateProduct(@PathVariable String id, @RequestBody ProductRequest request){
+        return updateProductService.execute(new UpdateProductCommand(id, request));
     }
 }

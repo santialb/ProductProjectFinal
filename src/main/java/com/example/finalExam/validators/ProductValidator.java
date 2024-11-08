@@ -10,17 +10,17 @@ import java.util.List;
 
 public class ProductValidator {
 
-    public static Product execute(ProductRequest productRequest, List<Category> availableCategories){
+    public static Product execute(ProductRequest productRequest, List<Category> availableCategories) {
 
-        if (categoryNotAvailable(productRequest.getCategory(), availableCategories)){
+        if (categoryNotAvailable(productRequest.getCategory(), availableCategories)) {
             throw new InvalidProductException();
         }
 
-        if (regionNotAvailable(productRequest.getRegion())){
+        if (regionNotAvailable(productRequest.getRegion())) {
             throw new InvalidProductException();
         }
 
-        if (ProfanityValidator.hasProfanity(productRequest.getName(), productRequest.getDescription())){
+        if (ProfanityValidator.hasProfanity(productRequest.getName(), productRequest.getDescription())) {
             throw new InvalidProductException();
         }
 
@@ -33,13 +33,13 @@ public class ProductValidator {
     }
 
     private static boolean regionNotAvailable(String candidate) {
-            for (Region region: Region.values()){
-                if (region.name().equals(candidate)){
-                    return false;
-                }
+        for (Region region : Region.values()) {
+            if (region.name().equals(candidate)) {
+                return false;
             }
-            return true;
+        }
+        return true;
     }
 
-    
+
 }

@@ -3,7 +3,6 @@ package com.example.finalExam.services;
 import com.example.finalExam.exceptions.ProductNotFoundException;
 import com.example.finalExam.models.Product;
 import com.example.finalExam.models.ProductDTO;
-import com.example.finalExam.models.ProductRequest;
 import com.example.finalExam.models.UpdateProductCommand;
 import com.example.finalExam.repositories.CategoryRepository;
 import com.example.finalExam.repositories.Command;
@@ -33,7 +32,7 @@ public class UpdateProductService implements Command<UpdateProductCommand, Produ
     public ResponseEntity<ProductDTO> execute(UpdateProductCommand command) {
         logger.info("Update Product Service {} {} {}", command.getId(), command.getProductRequest(), getClass().getSimpleName());
         Optional<Product> productOptional = productRepository.findById(command.getId());
-        if (productOptional.isPresent()){
+        if (productOptional.isPresent()) {
             Product product = ProductValidator.execute(command.getProductRequest(), categoryRepository.findAll());
             product.setId(command.getId());
             product.setCreatedAt(productOptional.get().getCreatedAt());
